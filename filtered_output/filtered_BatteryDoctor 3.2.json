@@ -1,0 +1,25 @@
+{
+  "file": "BatteryDoctor 3.2.ipa",
+  "package": "com.easysoft.BatteryDoctor",
+  "permissions": [],
+  "malware_indicators": {
+    "has_anti_debug": false,
+    "has_anti_vm": false,
+    "security_score_low": true
+  },
+  "scoring": {
+    "security_score": 24,
+    "high_risk": 2,
+    "medium_risk": 0,
+    "low_risk": 1,
+    "total_issues": 3
+  },
+  "classification": "Risk App",
+  "risk_details": {
+    "total_risk_weight": 17,
+    "suspicious_permission_count": 0,
+    "total_permissions": 0,
+    "suspicious_permissions_matched": [],
+    "reason": "Moderate risk weight (17)."
+  }
+}

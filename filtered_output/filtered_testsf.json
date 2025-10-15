@@ -1,0 +1,51 @@
+{
+  "file": "testsf.apk",
+  "package": "site.realanime.animlov.animlov",
+  "permissions": [
+    "android.permission.INTERNET",
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.WRITE_EXTERNAL_STORAGE",
+    "android.permission.READ_EXTERNAL_STORAGE",
+    "android.permission.ACCESS_FINE_LOCATION",
+    "android.permission.ACCESS_WIFI_STATE",
+    "android.permission.CHANGE_WIFI_STATE",
+    "android.permission.ACCESS_COARSE_LOCATION",
+    "android.permission.RECEIVE_BOOT_COMPLETED",
+    "android.permission.BLUETOOTH",
+    "android.permission.WAKE_LOCK",
+    "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE",
+    "com.google.android.c2dm.permission.RECEIVE"
+  ],
+  "malware_indicators": {
+    "has_anti_debug": false,
+    "has_anti_vm": true,
+    "security_score_low": true
+  },
+  "scoring": {
+    "security_score": 42,
+    "high_risk": 1,
+    "medium_risk": 9,
+    "low_risk": 0,
+    "total_issues": 10
+  },
+  "classification": "Risk App",
+  "risk_details": {
+    "total_risk_weight": 53,
+    "suspicious_permission_count": 11,
+    "total_permissions": 13,
+    "suspicious_permissions_matched": [
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE",
+      "android.permission.WRITE_EXTERNAL_STORAGE",
+      "android.permission.READ_EXTERNAL_STORAGE",
+      "android.permission.ACCESS_FINE_LOCATION",
+      "android.permission.ACCESS_WIFI_STATE",
+      "android.permission.CHANGE_WIFI_STATE",
+      "android.permission.ACCESS_COARSE_LOCATION",
+      "android.permission.RECEIVE_BOOT_COMPLETED",
+      "android.permission.BLUETOOTH",
+      "android.permission.WAKE_LOCK"
+    ],
+    "reason": "High risk weight (53)."
+  }
+}

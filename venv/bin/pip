@@ -1,4 +1,4 @@
-#!/home/yor/mobsf-cli/venv/bin/python3
+#!/home/rakasatryo/apk-ipa-analyzer/venv/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys
