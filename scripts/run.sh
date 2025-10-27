@@ -5,7 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-export MOBSF_URL="http://localhost:8000"
+export MOBSF_URL="http://localhost:5001"
 FULL_OUTPUT_DIR="$ROOT_DIR/full_output"
 FILTERED_OUTPUT_DIR="$ROOT_DIR/filtered_output"
 PDF_OUTPUT_DIR="$ROOT_DIR/pdf_output"

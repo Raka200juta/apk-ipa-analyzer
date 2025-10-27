@@ -2,7 +2,7 @@ import os
 
 class Config:
     # MobSF Configuration
-    MOBSF_URL = os.getenv('MOBSF_URL', 'http://localhost:8000')
+    MOBSF_URL = os.getenv('MOBSF_URL', 'http://localhost:5001')
     MOBSF_API_KEY = os.getenv('MOBSF_API_KEY', '')
     
     # Your App Configuration
