@@ -28,23 +28,25 @@ fi
 
 if [[ ! -f "$ENV_FILE" ]]; then
     echo "📝 Creating default .env file..."
-    cat > "$ENV_FILE" << EOL
-MOBSF_URL=http://mobsf:8001
-MOBSF_API_KEY=
-SERVICE_API_KEY=change-me-in-prod
-FLASK_ENV=development
-FLASK_APP=src.app
-PORT=8001
+    cat > "$ENV_FILE" << 'EOL'
+MOBSF_URL="http://mobsf:8001"
+MOBSF_API_KEY=""
+SERVICE_API_KEY="change-me-in-prod"
+FLASK_ENV="development"
+FLASK_APP="src.app"
+PORT="5002"
 EOL
 fi
 
 # Load env vars
 if [[ -f "$ENV_FILE" ]]; then
-    export $(cat "$ENV_FILE" | grep -v '^#' | xargs)
+    set -a
+    source "$ENV_FILE"
+    set +a
 fi
 
 mkdir -p "$ROOT_DIR/templates/fonts"
 mkdir -p "$ROOT_DIR/templates/css"
 
-echo "🚀 Starting Flask server on port ${PORT:-8001}..."
-python3 -m flask run --host=0.0.0.0 --port="${PORT:-8001}"
+echo "🚀 Starting Flask server on port ${PORT:-5002}..."
+python3 -m flask run --host=0.0.0.0 --port="${PORT:-5002}"
