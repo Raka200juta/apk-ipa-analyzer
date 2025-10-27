@@ -17,7 +17,7 @@ PDF_OUTPUT_DIR="$SCRIPT_DIR/pdf_output"
 # Create output directories if they don't exist
 mkdir -p "$FULL_OUTPUT_DIR" "$FILTERED_OUTPUT_DIR" "$PDF_OUTPUT_DIR"
 
-MOBSF_URL="http://localhost:8000"
+MOBSF_URL="http://localhost:8001"
 INPUT_PATH="${1:-}"
 
 # === Validate Input ===

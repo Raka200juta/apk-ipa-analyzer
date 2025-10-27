@@ -1,0 +1,7 @@
+Flask==3.0.3
+requests==2.32.3
+Jinja2==3.1.4
+pdfkit==1.0.0
+python-dotenv==1.0.0
+wkhtmltopdf
+PyYAML
