@@ -18,6 +18,13 @@ from permission_scoring import classify_permissions
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Initialize Flask app
+app = Flask(__name__)
+
+# Import and register blueprints
+from src.permission_report import permission_bp
+app.register_blueprint(permission_bp)
+
 # Coba import WeasyPrint
 try:
     from weasyprint import HTML
