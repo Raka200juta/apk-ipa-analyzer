@@ -29,7 +29,7 @@ except Exception as e:
     logger.warning("WeasyPrint not available: %s", e)
 
 # Config from environment
-MOBSF_URL = os.getenv("MOBSF_URL", "http://mobsf:8001").rstrip('/')
+MOBSF_URL = os.getenv("MOBSF_URL", "http://localhost:5001").rstrip('/')
 MOBSF_API_KEY = os.getenv("MOBSF_API_KEY", "")
 SERVICE_API_KEY = os.getenv("SERVICE_API_KEY", "change-me-in-prod")
 TIMEOUT = int(os.getenv("MOBSF_TIMEOUT", "30"))

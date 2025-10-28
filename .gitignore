@@ -1,1 +1,30 @@
+# Python Environment
 /venv
+/env
+.env
+*.pyc
+__pycache__/
+*.egg-info/
+.Python
+build/
+develop-eggs/
+dist/
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Output Directories (Generated during analysis)
+/full_output/
+/filtered_output/
+/pdf_output/
+/cache/
+
+# Temporary Files
+*.tmp
+*.temp
+.cache/
