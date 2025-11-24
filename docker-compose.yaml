@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  mobsf:
+    image: opensecurity/mobile-security-framework-mobsf:latest
+    ports:
+      - "5001:5000"
+    volumes:
+      - mobsf_data:/root/.MobSF
+    environment:
+      - MOBSF_ANALYZER=true
+  analyzer:
+    build: .
+    depends_on:
+      - mobsf
+    ports:
+      - "5002:5002"
+    volumes:
+      - ./full_output:/app/full_output
+      - ./pdf_output:/app/pdf_output
+      - ./filtered_output:/app/filtered_output
+    environment:
+      - MOBSF_URL=http://mobsf:5000
+      - FLASK_APP=src.app
+      - FLASK_ENV=production
+volumes:
+  mobsf_data:

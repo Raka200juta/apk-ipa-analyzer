@@ -143,14 +143,36 @@ else
     API_KEY=$(printf "%s" "$SECRET_KEY" | sha256sum | cut -d' ' -f1)
 
     echo "[*] Uploading: $BASENAME"
-    UPLOAD_RESP=$(curl -s -F "file=@$FILE" -H "Authorization: $API_KEY" "${MOBSF_URL}/api/v1/upload")
-    HASH=$(echo "$UPLOAD_RESP" | jq -r '.hash // empty')
-    [[ -z "$HASH" ]] && { echo "❌ Upload failed"; echo "$UPLOAD_RESP" | jq .; exit 1; }
+    UPLOAD_RESP=$(curl -s -F "file=@\"$FILE\"" -H "Authorization: $API_KEY" "${MOBSF_URL}/api/v1/upload" 2>&1)
+    UPLOAD_EXIT=$?
+    
+    if [[ $UPLOAD_EXIT -ne 0 ]]; then
+        echo "❌ Upload curl error (exit $UPLOAD_EXIT):"
+        echo "$UPLOAD_RESP"
+        exit $UPLOAD_EXIT
+    fi
+    
+    HASH=$(echo "$UPLOAD_RESP" | jq -r '.hash // empty' 2>/dev/null)
+    if [[ -z "$HASH" ]]; then
+        echo "❌ Upload failed or invalid response:"
+        echo "$UPLOAD_RESP" | jq . 2>/dev/null || echo "$UPLOAD_RESP"
+        exit 1
+    fi
 
     echo "[*] Starting scan..."
-    SCAN_RESP=$(curl -s -d "hash=$HASH" -H "Authorization: $API_KEY" "${MOBSF_URL}/api/v1/scan")
-    if echo "$SCAN_RESP" | jq -e '.error // empty' >/dev/null; then
-        echo "❌ Scan failed"; echo "$SCAN_RESP" | jq .; exit 1
+    SCAN_RESP=$(curl -s -d "hash=$HASH" -H "Authorization: $API_KEY" "${MOBSF_URL}/api/v1/scan" 2>&1)
+    SCAN_EXIT=$?
+    
+    if [[ $SCAN_EXIT -ne 0 ]]; then
+        echo "❌ Scan curl error (exit $SCAN_EXIT):"
+        echo "$SCAN_RESP"
+        exit $SCAN_EXIT
+    fi
+    
+    if echo "$SCAN_RESP" | jq -e '.error // empty' >/dev/null 2>&1; then
+        echo "❌ Scan failed:"
+        echo "$SCAN_RESP" | jq . 2>/dev/null || echo "$SCAN_RESP"
+        exit 1
     fi
 
     JSON_REPORT="$ROOT_DIR/full_output/report_${REPORT_NAME}.json"
