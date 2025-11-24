@@ -331,7 +331,96 @@ lsof -ti:5002 | xargs kill -9
 PORT=8080 ./scripts/start.sh
 ```
 
----
+## 🐳 Docker Usage (build, run, stop)
+
+This project supports running the Analyzer and MobSF via Docker or Docker Compose.
+
+### Using Docker Compose (recommended)
+- Build images:
+```bash
+docker compose build --no-cache
+```
+- Start services (background):
+```bash
+docker compose up -d
+```
+- Show logs (follow):
+```bash
+docker compose logs -f analyzer
+```
+- Check status:
+```bash
+docker compose ps
+```
+- Stop and remove containers & networks:
+```bash
+docker compose down
+```
+- To remove volumes and images:
+```bash
+docker compose down --volumes --rmi local
+```
+
+### Run containers manually (without compose)
+- Start MobSF:
+```bash
+docker run -d --name mobsf -p 5001:5000 opensecurity/mobile-security-framework-mobsf:latest
+```
+- Build analyzer image:
+```bash
+docker build -t apk-ipa-analyzer .
+```
+- Run analyzer (server mode):
+```bash
+docker run --rm -it --name analyzer \
+  -p 5002:5002 \
+  -v "$PWD/full_output":/app/full_output \
+  -v "$PWD/pdf_output":/app/pdf_output \
+  -v "$PWD/filtered_output":/app/filtered_output \
+  --env MOBSF_URL="http://host.docker.internal:5001" \
+  apk-ipa-analyzer
+```
+- Analyze a file (single-run inside container):
+```bash
+# Mount host file into container (use /data path inside)
+docker run --rm -it --name analyzer-run \
+  -v "/path/to/my.apk":/data/app.apk \
+  -v "$PWD/full_output":/app/full_output \
+  -v "$PWD/pdf_output":/app/pdf_output \
+  --env MOBSF_URL="http://host.docker.internal:5001" \
+  apk-ipa-analyzer /data/app.apk
+```
+- Stop and remove containers:
+```bash
+docker stop analyzer mobsf || true
+docker rm analyzer mobsf || true
+```
+- Remove image (if needed):
+```bash
+docker rmi apk-ipa-analyzer
+```
+
+### Networking notes
+- On Linux, `host.docker.internal` may not resolve. Use `--network host` or Docker Compose to connect services:
+```bash
+# Run analyzer with host networking (Linux)
+docker run --rm -it --network host apk-ipa-analyzer
+```
+- Or set MobSF URL to service name in compose:
+```yaml
+# docker-compose: set analyzer's MOBSF_URL to "http://mobsf:5000"
+```
+
+### Quick verification
+- Health endpoint:
+```bash
+curl http://localhost:5002/health
+# Expected: {"status":"ok", ...}
+```
+- Permission analysis (after scanning & getting hash):
+```bash
+curl "http://localhost:5002/permission_json?hash=<HASH>&api_key=change-me-in-prod" | jq .
+```
 
 ## 🔑 Security Notes
 
